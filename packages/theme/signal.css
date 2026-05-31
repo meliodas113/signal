@@ -1,0 +1,122 @@
+/* =============================================================================
+   @signal/theme — single source of truth for the SIGNAL design system.
+   Consumed by every app *after* `@import "tailwindcss";`.
+
+   Tailwind v4 turns each --color-* / --font-* token below into BOTH a CSS
+   variable and a utility class (e.g. `bg-bg`, `text-signal`, `font-mono`).
+   ========================================================================== */
+
+@theme {
+  --color-bg: #0a0d0e;
+  --color-surface: #11171a;
+  --color-surface-2: #151c20;
+  --color-line: #222d31;
+  --color-text: #e9f0ea;
+  --color-dim: #8a9a93;
+  --color-faint: #586863;
+  --color-signal: #c2f53f;
+  --color-signal-dim: #7e9a2e;
+  --color-amber: #ffb547;
+  --color-danger: #ff5c52;
+
+  --font-display: "Archivo", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* ----------------------------------------------------------------- base ---- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(1000px 600px at 88% -8%, rgba(194, 245, 63, 0.07), transparent 60%),
+      radial-gradient(700px 500px at 8% 30%, rgba(194, 245, 63, 0.03), transparent 60%),
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.011) 0 1px, transparent 1px 3px);
+    background-attachment: fixed;
+  }
+}
+
+/* ----------------------------------------------------- reusable motifs ---- */
+@layer components {
+  /* Radar sweep — the brand motif. Size via width/height on the element. */
+  .scope-mini {
+    position: relative;
+    overflow: hidden;
+    border-radius: 9999px;
+    border: 1px solid var(--color-signal-dim);
+    background: radial-gradient(circle, rgba(194, 245, 63, 0.12), transparent 70%);
+    flex: none;
+  }
+  .scope-mini::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: conic-gradient(from 0deg, rgba(194, 245, 63, 0.6), transparent 28%);
+    animation: sig-sweep 3.2s linear infinite;
+  }
+  .scope-mini::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background:
+      linear-gradient(rgba(194, 245, 63, 0.25), rgba(194, 245, 63, 0.25)) 50% / 1px 100% no-repeat,
+      linear-gradient(rgba(194, 245, 63, 0.25), rgba(194, 245, 63, 0.25)) 50% / 100% 1px no-repeat;
+  }
+
+  /* Scroll reveal — toggled by the useReveal hook. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Signal-strength bars (fit score). */
+  .bars {
+    display: inline-flex;
+    gap: 3px;
+  }
+  .bars > i {
+    width: 6px;
+    height: 14px;
+    border-radius: 2px;
+    background: var(--color-line);
+  }
+  .bars > i.lit {
+    background: var(--color-signal);
+  }
+}
+
+@keyframes sig-sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes sig-ping {
+  0%, 100% { opacity: 0.45; transform: scale(0.8); }
+  45% { opacity: 1; transform: scale(1.25); }
+}
+@keyframes sig-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sig-blink {
+  50% { opacity: 0.25; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scope-mini::after { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}

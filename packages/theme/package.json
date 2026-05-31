@@ -1,0 +1,9 @@
+{
+  "name": "@signal/theme",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared SIGNAL design system: Tailwind v4 @theme tokens, base layer, and motifs.",
+  "exports": {
+    "./signal.css": "./signal.css"
+  }
+}
