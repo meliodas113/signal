@@ -55,11 +55,11 @@ export function EmailCapture({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && submit()}
-          className="flex-1 bg-transparent px-4 py-[15px] text-[15px] text-text outline-none placeholder:text-faint"
+          className="w-full min-w-0 flex-1 bg-transparent px-4 py-[15px] text-[15px] text-text outline-none placeholder:text-faint"
         />
         <button
           onClick={submit}
-          className="cursor-pointer whitespace-nowrap bg-signal px-6 font-mono text-xs font-bold uppercase tracking-wider text-bg transition hover:brightness-110"
+          className="cursor-pointer whitespace-nowrap bg-signal px-4 font-mono text-xs font-bold uppercase tracking-wider text-bg transition hover:brightness-110 sm:px-6"
         >
           {cta}
         </button>

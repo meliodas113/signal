@@ -3,7 +3,7 @@ import { Brand } from "./Brand";
 export function Footer() {
   return (
     <footer className="mt-[30px] border-t border-line py-11">
-      <div className="mx-auto flex max-w-[1140px] flex-wrap items-start justify-between gap-6 px-7">
+      <div className="mx-auto flex max-w-[1140px] flex-wrap items-start justify-between gap-6 px-5 sm:px-7">
         <Brand />
         <p className="max-w-[54ch] font-mono text-[11px] leading-[1.8] tracking-wide text-faint">
           <span className="text-dim">

@@ -39,7 +39,7 @@ const STEPS = [
 
 export function HowItWorks() {
   return (
-    <section id="how" className="mx-auto max-w-[1140px] px-7 py-16 md:py-24">
+    <section id="how" className="mx-auto max-w-[1140px] px-5 py-16 sm:px-7 md:py-24">
       <Reveal>
         <div className="mb-14 max-w-[60ch]">
           <Kicker>How it works</Kicker>
@@ -52,7 +52,7 @@ export function HowItWorks() {
       <div className="grid grid-cols-1 gap-[18px] md:grid-cols-3">
         {STEPS.map((s, i) => (
           <Reveal key={s.no} delay={i * 0.08}>
-            <div className="group h-full rounded-2xl border border-line bg-surface p-[30px] transition hover:-translate-y-1 hover:border-signal-dim">
+            <div className="group h-full rounded-2xl border border-line bg-surface p-6 transition hover:-translate-y-1 hover:border-signal-dim sm:p-[30px]">
               <div className="mb-5 font-mono text-xs tracking-[0.2em] text-signal">{s.no}</div>
               <div className="mb-[18px] flex h-[42px] w-[42px] items-center justify-center rounded-[10px] border border-signal-dim bg-[rgba(194,245,63,0.06)]">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-signal)" strokeWidth="1.6">

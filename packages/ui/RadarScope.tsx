@@ -22,7 +22,7 @@ export interface RadarScopeProps {
  */
 export function RadarScope({ size = 380, blips = [], readout, className }: RadarScopeProps) {
   return (
-    <div className={cn("relative", className)} style={{ width: size, height: size, maxWidth: "100%" }}>
+    <div className={cn("relative", className)} style={{ width: size, maxWidth: "100%", aspectRatio: "1 / 1" }}>
       <div
         className="relative h-full w-full rounded-full border border-line"
         style={{ background: "radial-gradient(circle at center, rgba(194,245,63,0.07), transparent 70%)" }}

@@ -30,7 +30,7 @@ const TIERS = [
 
 export function Pricing() {
   return (
-    <section id="pricing" className="mx-auto max-w-[1140px] px-7 py-16 md:py-24">
+    <section id="pricing" className="mx-auto max-w-[1140px] px-5 py-16 sm:px-7 md:py-24">
       <Reveal>
         <div className="mx-auto mb-14 max-w-[60ch] text-center">
           <Kicker center>Pricing</Kicker>
@@ -44,7 +44,7 @@ export function Pricing() {
         {TIERS.map((t, i) => (
           <Reveal key={t.name} delay={i * 0.08}>
             <div
-              className={`relative h-full rounded-2xl border p-[34px] ${
+              className={`relative h-full rounded-2xl border p-6 sm:p-[34px] ${
                 t.pro
                   ? "border-signal-dim bg-[linear-gradient(180deg,rgba(194,245,63,0.05),transparent_40%)]"
                   : "border-line bg-surface"

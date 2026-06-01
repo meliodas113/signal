@@ -3,7 +3,7 @@ import { Reveal } from "./Reveal";
 
 export function SampleMatch() {
   return (
-    <section className="mx-auto max-w-[1140px] px-7 py-16 md:py-24">
+    <section className="mx-auto max-w-[1140px] px-5 py-16 sm:px-7 md:py-24">
       <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-[0.92fr_1.08fr]">
         <Reveal>
           <div className="max-w-[60ch]">

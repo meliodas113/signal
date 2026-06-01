@@ -12,7 +12,7 @@ const BLIPS = [
 
 export function Hero() {
   return (
-    <header className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-14 px-7 py-14 md:grid-cols-[1.05fr_0.95fr] md:py-[90px]">
+    <header className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-10 px-5 py-12 sm:px-7 md:grid-cols-[1.05fr_0.95fr] md:gap-14 md:py-[90px]">
       <div className="order-2 md:order-1">
         <Reveal>
           <Kicker>Non-dilutive funding radar</Kicker>
@@ -38,7 +38,9 @@ export function Hero() {
       </div>
 
       <Reveal className="order-1 flex justify-center md:order-2" delay={0.1}>
-        <RadarScope size={380} blips={BLIPS} readout="8 open · 3 strong matches" />
+        <div className="w-full max-w-[300px] sm:max-w-[340px] md:max-w-none">
+          <RadarScope size={380} blips={BLIPS} readout="8 open · 3 strong matches" />
+        </div>
       </Reveal>
     </header>
   );

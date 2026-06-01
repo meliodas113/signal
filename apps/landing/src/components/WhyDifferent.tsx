@@ -17,7 +17,7 @@ const GOOD = [
 
 export function WhyDifferent() {
   return (
-    <section id="why" className="mx-auto max-w-[1140px] px-7 py-16 md:py-24">
+    <section id="why" className="mx-auto max-w-[1140px] px-5 py-16 sm:px-7 md:py-24">
       <Reveal>
         <div className="mb-14 max-w-[60ch]">
           <Kicker>The problem</Kicker>
@@ -34,7 +34,7 @@ export function WhyDifferent() {
 
       <div className="grid grid-cols-1 gap-[18px] md:grid-cols-2">
         <Reveal>
-          <div className="rounded-2xl border border-line bg-surface p-[30px]">
+          <div className="rounded-2xl border border-line bg-surface p-6 sm:p-[30px]">
             <div className="mb-[18px] font-mono text-[11px] uppercase tracking-[0.16em] text-faint">
               Searching grants.gov yourself
             </div>
@@ -54,7 +54,7 @@ export function WhyDifferent() {
         </Reveal>
 
         <Reveal delay={0.08}>
-          <div className="rounded-2xl border border-line bg-surface p-[30px]">
+          <div className="rounded-2xl border border-line bg-surface p-6 sm:p-[30px]">
             <div className="mb-[18px] font-mono text-[11px] uppercase tracking-[0.16em] text-signal">
               With SIGNAL
             </div>
