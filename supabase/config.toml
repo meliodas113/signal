@@ -1,0 +1,9 @@
+# Supabase project config (consumed by the Supabase CLI).
+# `project_id` is the *local* name; link to your hosted project with
+# `supabase link --project-ref <ref>`.
+project_id = "signal"
+
+[functions.early-access]
+# The function is a public signup endpoint. Requests must still carry the
+# project's anon key (a signed JWT) as a Bearer token, which the browser sends.
+verify_jwt = true

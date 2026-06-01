@@ -609,7 +609,7 @@ export function About() {
             <p className="mb-8 text-base text-dim">
               Start free — federal SBIR/STTR coverage, scored matches, no card required.
             </p>
-            <EmailCapture cta="Get early access" centered />
+            <EmailCapture cta="Get early access" centered source="about-cta" />
           </div>
         </Reveal>
       </section>

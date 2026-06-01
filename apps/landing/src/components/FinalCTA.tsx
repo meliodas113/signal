@@ -12,7 +12,7 @@ export function FinalCTA() {
           <p className="mb-8 text-base text-dim">
             Join the early-access list. We&apos;ll bring the topics to you.
           </p>
-          <EmailCapture cta="Get early access" centered />
+          <EmailCapture cta="Get early access" centered source="final-cta" />
         </div>
       </Reveal>
     </section>

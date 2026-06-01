@@ -30,7 +30,7 @@ export function Hero() {
           </p>
         </Reveal>
         <Reveal delay={0.18}>
-          <EmailCapture cta="Get access" />
+          <EmailCapture cta="Get access" source="hero" />
           <p className="mt-3.5 font-mono text-[11px] tracking-wide text-faint">
             No card. Free tier covers federal SBIR/STTR. Built on official .gov data.
           </p>
