@@ -48,6 +48,24 @@ function json(body: unknown, status = 200): Response {
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+
+  // Public signup count for social proof: GET ?count=1 -> { count }.
+  if (req.method === "GET") {
+    const url = new URL(req.url);
+    if (!url.searchParams.has("count")) return json({ error: "Method not allowed" }, 405);
+    const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    const { count, error } = await supabase
+      .from("early_access_signups")
+      .select("*", { count: "exact", head: true });
+    if (error) {
+      console.error("early-access: count failed", error);
+      return json({ count: null });
+    }
+    return json({ count: count ?? 0 });
+  }
+
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
   // ---- parse + validate ----------------------------------------------------

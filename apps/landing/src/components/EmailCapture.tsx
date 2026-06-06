@@ -48,12 +48,38 @@ export function EmailCapture({
   }
 
   if (status === "done") {
+    const shareText = "I just joined the early-access list for SIGNAL — an SBIR/STTR grant radar that scores federal funding topics against your tech. Worth a look:";
+    const shareUrl = "https://getsignal.co.in";
+    const twitter = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+    const linkedin = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
     return (
-      <p
-        className={`font-mono text-[13px] tracking-wide text-signal ${centered ? "text-center" : ""}`}
-      >
-        ✓ You&apos;re on the list — check your inbox for a confirmation.
-      </p>
+      <div className={centered ? "mx-auto w-full max-w-[420px] text-center" : "w-full max-w-[420px]"}>
+        <p className="font-mono text-[13px] tracking-wide text-signal">
+          ✓ You&apos;re on the list — check your inbox for a confirmation.
+        </p>
+        <div className={`mt-3 flex items-center gap-3 ${centered ? "justify-center" : ""}`}>
+          <span className="font-mono text-[10px] uppercase tracking-wider text-faint">
+            Know other founders?
+          </span>
+          <a
+            href={twitter}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-[11px] font-bold uppercase tracking-wider text-dim transition hover:text-signal"
+          >
+            Share on X
+          </a>
+          <span className="text-line">·</span>
+          <a
+            href={linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-[11px] font-bold uppercase tracking-wider text-dim transition hover:text-signal"
+          >
+            LinkedIn
+          </a>
+        </div>
+      </div>
     );
   }
 

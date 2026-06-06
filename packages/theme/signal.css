@@ -83,6 +83,34 @@
     transform: none;
   }
 
+  /* Range slider (value calculator). */
+  .signal-range {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--color-line);
+    outline: none;
+    cursor: pointer;
+  }
+  .signal-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-signal);
+    border: 3px solid var(--color-bg);
+    box-shadow: 0 0 0 1px var(--color-signal-dim);
+  }
+  .signal-range::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-signal);
+    border: 3px solid var(--color-bg);
+  }
+
   /* Signal-strength bars (fit score). */
   .bars {
     display: inline-flex;
@@ -114,6 +142,10 @@
 }
 @keyframes sig-blink {
   50% { opacity: 0.25; }
+}
+@keyframes sig-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 @media (prefers-reduced-motion: reduce) {

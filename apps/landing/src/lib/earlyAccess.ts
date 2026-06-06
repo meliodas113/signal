@@ -53,3 +53,25 @@ export async function submitEarlyAccess(
 
   return (await res.json()) as EarlyAccessResult;
 }
+
+/**
+ * Public count of early-access signups, for social proof. Returns null if the
+ * endpoint isn't configured/available (callers should fall back gracefully).
+ */
+export async function getWaitlistCount(): Promise<number | null> {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return null;
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL.replace(/\/$/, "")}/functions/v1/early-access?count=1`,
+      {
+        method: "GET",
+        headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
+      },
+    );
+    if (!res.ok) return null;
+    const data = (await res.json()) as { count?: number };
+    return typeof data.count === "number" ? data.count : null;
+  } catch {
+    return null;
+  }
+}
