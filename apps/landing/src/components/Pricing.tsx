@@ -1,5 +1,6 @@
 import { Kicker } from "./Kicker";
 import { Reveal } from "./Reveal";
+import { goToSection } from "../router";
 
 const TIERS = [
   {
@@ -69,7 +70,11 @@ export function Pricing() {
                 ))}
               </ul>
               <a
-                href="#get"
+                href="/#get"
+                onClick={(e) => {
+                  e.preventDefault();
+                  goToSection("get");
+                }}
                 className={`block rounded-[10px] py-3.5 text-center font-mono text-xs font-bold uppercase tracking-wider transition ${
                   t.pro
                     ? "bg-signal text-bg hover:shadow-[0_0_22px_rgba(194,245,63,0.3)]"

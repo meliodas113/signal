@@ -9,24 +9,16 @@ import { Pricing } from "./components/Pricing";
 import { FinalCTA } from "./components/FinalCTA";
 import { Footer } from "./components/Footer";
 import { About } from "./pages/About";
-import { useHashRoute } from "./useHashRoute";
+import { usePathname, migrateLegacyHash } from "./router";
 
 export default function App() {
-  const hash = useHashRoute();
-  const isAbout = hash === "#/about";
+  const path = usePathname();
+  const isAbout = path === "/about";
 
-  // Manage scroll position on route/anchor change.
+  // Redirect any old hash URLs (#/about, #why) to the new clean paths.
   useEffect(() => {
-    if (isAbout) {
-      window.scrollTo({ top: 0 });
-    } else if (/^#[a-zA-Z]/.test(hash)) {
-      // In-page anchor (e.g. #why): scroll once the landing page has rendered.
-      const id = window.setTimeout(() => {
-        document.getElementById(hash.slice(1))?.scrollIntoView();
-      }, 0);
-      return () => window.clearTimeout(id);
-    }
-  }, [hash, isAbout]);
+    migrateLegacyHash();
+  }, []);
 
   return (
     <div className="min-h-screen overflow-x-hidden">
