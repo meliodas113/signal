@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="SIGNAL radar">
+  <rect width="32" height="32" rx="7" fill="#0a0d0e"/>
+  <!-- sweep wedge -->
+  <path d="M16 16 L16 3.5 A12.5 12.5 0 0 1 27.5 11 Z" fill="#c2f53f" fill-opacity="0.20"/>
+  <!-- rings -->
+  <g fill="none" stroke="#c2f53f">
+    <circle cx="16" cy="16" r="11.5" stroke-opacity="0.30" stroke-width="1.4"/>
+    <circle cx="16" cy="16" r="7.5" stroke-opacity="0.22" stroke-width="1.2"/>
+    <circle cx="16" cy="16" r="3.5" stroke-opacity="0.22" stroke-width="1"/>
+    <!-- crosshair -->
+    <line x1="4.5" y1="16" x2="27.5" y2="16" stroke-opacity="0.18" stroke-width="1"/>
+    <line x1="16" y1="4.5" x2="16" y2="27.5" stroke-opacity="0.18" stroke-width="1"/>
+  </g>
+  <!-- center -->
+  <circle cx="16" cy="16" r="1.5" fill="#c2f53f"/>
+  <!-- blip -->
+  <circle cx="21.8" cy="10.6" r="2.4" fill="#c2f53f"/>
+</svg>
