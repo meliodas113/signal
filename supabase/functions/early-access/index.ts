@@ -20,8 +20,17 @@ const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const RESEND_FROM = Deno.env.get("RESEND_FROM") ?? "SIGNAL <onboarding@resend.dev>";
 const SITE_URL = Deno.env.get("SITE_URL") ?? undefined;
 const ALLOWED_ORIGIN = Deno.env.get("ALLOWED_ORIGIN") ?? "*";
+// Where replies + unsubscribe requests go. Defaults to the From address.
+const REPLY_TO = Deno.env.get("REPLY_TO") ?? undefined;
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+/** Extract the bare address from "Name <addr@x>" or "addr@x". */
+function senderAddress(from: string): string | undefined {
+  const m = from.match(/<([^>]+)>/);
+  return m ? m[1] : from.includes("@") ? from.trim() : undefined;
+}
+const REPLY_ADDRESS = REPLY_TO ?? senderAddress(RESEND_FROM);
 
 const corsHeaders: Record<string, string> = {
   "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
@@ -92,9 +101,14 @@ Deno.serve(async (req) => {
         body: JSON.stringify({
           from: RESEND_FROM,
           to: [email],
+          ...(REPLY_ADDRESS ? { reply_to: REPLY_ADDRESS } : {}),
           subject: "You're on the SIGNAL early-access list",
           html: renderWelcomeEmail({ email, siteUrl: SITE_URL }),
           text: welcomeEmailText(email, SITE_URL),
+          // List-Unsubscribe improves inbox placement (Gmail/Yahoo bulk-sender guidance).
+          ...(REPLY_ADDRESS
+            ? { headers: { "List-Unsubscribe": `<mailto:${REPLY_ADDRESS}?subject=unsubscribe>` } }
+            : {}),
           tags: [{ name: "type", value: "early-access-welcome" }],
         }),
       });
