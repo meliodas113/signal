@@ -1,137 +1,84 @@
-import { useState } from "react";
+import { useRef } from "react";
+import { Kicker } from "./Kicker";
 import { Reveal } from "./Reveal";
 
 // Federal agencies that run SBIR/STTR programs SIGNAL tracks. Descriptions are
 // factual summaries of each agency's focus.
 const AGENCIES = [
-  {
-    abbr: "DoD",
-    name: "Department of Defense",
-    focus:
-      "The largest SBIR/STTR program — AFWERX, Navy, Army and more. Dual-use defense tech from autonomy to advanced materials.",
-  },
-  {
-    abbr: "NASA",
-    name: "National Aeronautics & Space Administration",
-    focus:
-      "Aerospace and in-space systems: propulsion, autonomy, sensing, and resilient hardware for extreme environments.",
-  },
-  {
-    abbr: "NSF",
-    name: "National Science Foundation",
-    focus:
-      "America's Seed Fund — broad deep-tech R&D across nearly every field of science and engineering.",
-  },
-  {
-    abbr: "NIH",
-    name: "National Institutes of Health",
-    focus:
-      "Biomedical and health innovation: diagnostics, therapeutics, medical devices, and digital health.",
-  },
-  {
-    abbr: "DOE",
-    name: "Department of Energy",
-    focus: "Clean energy, storage, the grid, advanced materials, and the physical sciences.",
-  },
-  {
-    abbr: "DARPA",
-    name: "Defense Advanced Research Projects Agency",
-    focus: "High-risk, high-reward breakthroughs — the moonshots of national-security technology.",
-  },
-  {
-    abbr: "DHS",
-    name: "Department of Homeland Security",
-    focus: "Critical-infrastructure protection, cybersecurity, and resilience.",
-  },
-  {
-    abbr: "USDA",
-    name: "Department of Agriculture",
-    focus: "AgTech, food systems, rural innovation, and biotechnology.",
-  },
-  {
-    abbr: "DOT",
-    name: "Department of Transportation",
-    focus: "Mobility, infrastructure, safety, and next-generation transportation systems.",
-  },
-  {
-    abbr: "EPA",
-    name: "Environmental Protection Agency",
-    focus: "Environmental monitoring, remediation, and pollution-reduction technology.",
-  },
-  {
-    abbr: "NOAA",
-    name: "Nat'l Oceanic & Atmospheric Administration",
-    focus: "Ocean, climate, weather, and Earth-observation technologies.",
-  },
-  {
-    abbr: "ED",
-    name: "Department of Education",
-    focus: "Education technology and learning-science innovation.",
-  },
+  { abbr: "DoD", name: "Department of Defense", focus: "Largest SBIR program — AFWERX, Navy, Army. Dual-use defense tech." },
+  { abbr: "NASA", name: "Aeronautics & Space", focus: "In-space systems, propulsion, autonomy, sensing for extreme environments." },
+  { abbr: "NSF", name: "National Science Foundation", focus: "America's Seed Fund — broad deep-tech R&D across science & engineering." },
+  { abbr: "NIH", name: "National Institutes of Health", focus: "Biomedical & health: diagnostics, therapeutics, devices, digital health." },
+  { abbr: "DOE", name: "Department of Energy", focus: "Clean energy, storage, the grid, advanced materials, physical sciences." },
+  { abbr: "DARPA", name: "Defense Advanced Research", focus: "High-risk, high-reward breakthroughs — national-security moonshots." },
+  { abbr: "DHS", name: "Homeland Security", focus: "Critical-infrastructure protection, cybersecurity, and resilience." },
+  { abbr: "USDA", name: "Department of Agriculture", focus: "AgTech, food systems, rural innovation, and biotechnology." },
+  { abbr: "DOT", name: "Department of Transportation", focus: "Mobility, infrastructure, safety, next-gen transportation systems." },
+  { abbr: "EPA", name: "Environmental Protection", focus: "Environmental monitoring, remediation, and pollution-reduction tech." },
+  { abbr: "NOAA", name: "Oceanic & Atmospheric", focus: "Ocean, climate, weather, and Earth-observation technologies." },
+  { abbr: "ED", name: "Department of Education", focus: "Education technology and learning-science innovation." },
 ];
 
 export function AgencyWall() {
-  const [selected, setSelected] = useState(0);
-  const [hovered, setHovered] = useState<number | null>(null);
-  const active = hovered ?? selected;
-  const agency = AGENCIES[active];
+  const gridRef = useRef<HTMLDivElement | null>(null);
+
+  // Move a radial "spotlight" with the cursor (CSS vars, no re-render).
+  function onMove(e: React.MouseEvent) {
+    const el = gridRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    el.style.setProperty("--my", `${e.clientY - r.top}px`);
+  }
 
   return (
     <section className="border-y border-line">
-      <div className="mx-auto max-w-[1140px] px-5 py-10 sm:px-7 md:py-14">
+      <div className="mx-auto max-w-[1140px] px-5 py-14 sm:px-7 md:py-20">
         <Reveal>
-          <p className="text-center font-mono text-[11px] uppercase tracking-[0.2em] text-faint">
-            One radar across every participating SBIR / STTR agency
-          </p>
+          <div className="mx-auto mb-10 max-w-[60ch] text-center">
+            <Kicker center>Total coverage</Kicker>
+            <h2 className="mt-[18px] text-[clamp(26px,3.4vw,38px)] font-extrabold leading-[1.08] tracking-[-0.02em]">
+              Every agency. One radar.
+            </h2>
+            <p className="mt-3 text-[15px] leading-relaxed text-dim">
+              SBIR/STTR lives across a dozen federal portals. SIGNAL watches them all — hover any to
+              see what it funds.
+            </p>
+          </div>
         </Reveal>
 
         <Reveal delay={0.06}>
           <div
-            className="mt-7 grid grid-cols-3 gap-2.5 sm:grid-cols-4 md:grid-cols-6"
-            onMouseLeave={() => setHovered(null)}
+            ref={gridRef}
+            onMouseMove={onMove}
+            className="group relative grid grid-cols-2 gap-2.5 rounded-3xl sm:grid-cols-3 sm:gap-3 lg:grid-cols-4"
           >
-            {AGENCIES.map((a, i) => {
-              const on = active === i;
-              return (
-                <button
-                  key={a.abbr}
-                  onMouseEnter={() => setHovered(i)}
-                  onFocus={() => setHovered(i)}
-                  onBlur={() => setHovered(null)}
-                  onClick={() => setSelected(i)}
-                  aria-pressed={selected === i}
-                  className={`rounded-xl border px-2 py-3.5 text-center font-mono text-[14px] font-bold tracking-wider transition-all duration-200 sm:text-[15px] ${
-                    on
-                      ? "-translate-y-0.5 border-signal-dim bg-[rgba(194,245,63,0.07)] text-signal shadow-[0_0_22px_rgba(194,245,63,0.14)]"
-                      : "border-line text-dim hover:text-text"
-                  }`}
-                >
-                  {a.abbr}
-                </button>
-              );
-            })}
-          </div>
-        </Reveal>
+            {/* cursor-following spotlight (behind the translucent cards) */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style={{
+                background:
+                  "radial-gradient(280px circle at var(--mx,50%) var(--my,50%), rgba(194,245,63,0.12), transparent 70%)",
+              }}
+            />
 
-        {/* detail panel reflects hovered (preview) or selected (pinned) agency */}
-        <Reveal delay={0.12}>
-          <div className="mt-5 flex min-h-[92px] items-center gap-4 rounded-2xl border border-line bg-surface p-5 sm:gap-5 sm:p-6">
-            <div className="scope-mini h-11 w-11 flex-none sm:h-12 sm:w-12" aria-hidden />
-            <div key={active} className="animate-[sig-rise_0.3s_ease-out]">
-              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
-                <span className="font-mono text-[15px] font-bold tracking-wide text-signal">
-                  {agency.abbr}
-                </span>
-                <span className="text-[13px] font-semibold text-text">{agency.name}</span>
-              </div>
-              <p className="mt-1.5 max-w-[70ch] text-[13.5px] leading-relaxed text-dim">
-                {agency.focus}
-              </p>
-            </div>
+            {AGENCIES.map((a) => (
+              <article
+                key={a.abbr}
+                className="agency-card relative overflow-hidden rounded-2xl border border-line bg-surface/60 p-4 backdrop-blur-sm transition-[transform,border-color,background-color,box-shadow] duration-200 hover:-translate-y-1 hover:border-signal-dim/60 hover:bg-surface hover:shadow-[0_12px_34px_rgba(0,0,0,0.4)] sm:p-5"
+              >
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="scope-mini h-9 w-9" aria-hidden />
+                  <span className="font-mono text-[18px] font-bold tracking-wider text-signal sm:text-[20px]">
+                    {a.abbr}
+                  </span>
+                </div>
+                <div className="text-[12.5px] font-bold leading-snug text-text">{a.name}</div>
+                <p className="mt-1.5 text-[11.5px] leading-relaxed text-dim">{a.focus}</p>
+              </article>
+            ))}
           </div>
-          <p className="mt-2.5 text-center font-mono text-[10px] tracking-wide text-faint">
-            Hover or tap an agency · SIGNAL scores your tech against every one.
-          </p>
         </Reveal>
       </div>
     </section>
