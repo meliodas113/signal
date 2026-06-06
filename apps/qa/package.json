@@ -1,0 +1,26 @@
+{
+  "name": "@signal/qa",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "SIGNAL autonomous QA agent — drives the landing page in a real browser, finds regressions, and files them to Linear with screenshots on a schedule.",
+  "scripts": {
+    "check": "tsx src/index.ts",
+    "check:dry": "tsx src/index.ts --dry-run",
+    "loop": "tsx src/loop.ts",
+    "browser:install": "playwright install chromium",
+    "schedule:install": "bash src/scheduler/install-schedule.sh install",
+    "schedule:uninstall": "bash src/scheduler/install-schedule.sh uninstall",
+    "schedule:status": "bash src/scheduler/install-schedule.sh status",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "playwright": "^1.49.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
